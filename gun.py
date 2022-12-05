@@ -65,11 +65,13 @@ class Ball:
         pygame.draw.circle(self.screen, choice(GAME_COLORS), (self.x, self.y), self.r)
 
     def hittest(self, obj):
+        "условия столкновения снаряда и мишени"
         if (self.x - obj.x)**2 + (self.y - obj.y)**2 <= (self.r + obj.r)**2:
             return True
         return False
 
     def hittest1(self, obj):
+        "описывает столкновение снаряда со второй пушкой"
         if (self.x - obj.x)**2 + (self.y - obj.y)**2 <= (self.r + 20)**2:
             return True
         return False
@@ -81,6 +83,8 @@ class Ellipsball:
         Args:
         x - начальное положение мяча по горизонтали
         y - начальное положение мяча по вертикали
+        w - ширина объекта
+        l - длина объекта
         """
         self.screen = screen
         self.x = x
@@ -95,9 +99,9 @@ class Ellipsball:
         self.time = 0
 
     def move(self):
-        """Переместить мяч по прошествии единицы времени.
+        """Переместить снаряд по прошествии единицы времени.
 
-        Метод описывает перемещение мяча за один кадр перерисовки. То есть, обновляет значения
+        Метод описывает перемещение за один кадр перерисовки. То есть, обновляет значения
         self.x и self.y с учетом скоростей self.vx и self.vy, силы гравитации, действующей на мяч,
         и стен по краям окна (размер окна 800х600).
         """
@@ -123,19 +127,23 @@ class Ellipsball:
         self.time += 1
 
     def draw(self):
+        "рисует сняряд второго типа"
         pygame.draw.ellipse(self.screen, choice(GAME_COLORS), (self.x, self.y, self.w, self.l))
 
     def hittest(self, obj):
+        "описывает столкновение снаряда и мишени"
         if  self.x - self.w/2 <= obj.x <= self.x + self.w/2 and self.y - self.l/2 <= obj.y <= self.y + self.l/2:
             return True
         return False
 
     def hittest1(self, obj):
+        "описывает столкновение снаряда и пушки"
         if (self.x - 20)**2 + (self.y - 520)**2 <= (30)**2:
             return True
         return False
 
 class Gun:
+    "описание объекта класса Gun"
     def __init__(self, screen):
         self.screen = screen
         self.f2_power = 30
